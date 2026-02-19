@@ -1,0 +1,1073 @@
+[
+    {
+        "name": "Activation of innate immune response",
+        "id": "GO:0002218",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002218",
+        "count": "164"
+    },
+    {
+        "name": "Adaptive immune memory response",
+        "id": "GO:0090716",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0090716",
+        "count": "3"
+    },
+    {
+        "name": "Adaptive immune memory response involving T cells and B cells",
+        "id": "GO:0090717",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0090717",
+        "count": "3"
+    },
+    {
+        "name": "Adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains",
+        "id": "GO:0002460",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002460",
+        "count": "162"
+    },
+    {
+        "name": "Advanced glycosylation endproduct receptor signaling",
+        "id": "R-HSA-879415",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-879415",
+        "count": "13"
+    },
+    {
+        "name": "Alpha-beta T cell activation",
+        "id": "GO:0046631",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0046631",
+        "count": "89"
+    },
+    {
+        "name": "Alpha-protein kinase 1 signaling pathway",
+        "id": "R-HSA-9645460",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-9645460",
+        "count": "11"
+    },
+    {
+        "name": "Antibacterial innate immune response",
+        "id": "GO:0140367",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0140367",
+        "count": "10"
+    },
+    {
+        "name": "Antibody-dependent cellular cytotoxicity",
+        "id": "GO:0001788",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0001788",
+        "count": "8"
+    },
+    {
+        "name": "Antifungal innate immune response",
+        "id": "GO:0061760",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0061760",
+        "count": "18"
+    },
+    {
+        "name": "Antigen processing and presentation",
+        "id": "GO:0019882",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0019882",
+        "count": "101"
+    },
+    {
+        "name": "Antigen receptor-mediated signaling pathway",
+        "id": "GO:0050851",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0050851",
+        "count": "159"
+    },
+    {
+        "name": "Antimicrobial humoral response",
+        "id": "GO:0019730",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0019730",
+        "count": "146"
+    },
+    {
+        "name": "Antimicrobial peptides",
+        "id": "R-HSA-6803157",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-6803157",
+        "count": "95"
+    },
+    {
+        "name": "Antiviral innate immune response",
+        "id": "GO:0140374",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0140374",
+        "count": "54"
+    },
+    {
+        "name": "Antiviral mechanism by IFN-stimulated genes",
+        "id": "R-HSA-1169410",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-1169410",
+        "count": "149"
+    },
+    {
+        "name": "B cell activation",
+        "id": "GO:0042113",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0042113",
+        "count": "185"
+    },
+    {
+        "name": "B cell costimulation",
+        "id": "GO:0031296",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0031296",
+        "count": "3"
+    },
+    {
+        "name": "B cell differentiation",
+        "id": "GO:0030183",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0030183",
+        "count": "123"
+    },
+    {
+        "name": "B cell receptor apoptotic signaling pathway",
+        "id": "GO:1990117",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:1990117",
+        "count": "2"
+    },
+    {
+        "name": "B cell selection",
+        "id": "GO:0002339",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002339",
+        "count": "4"
+    },
+    {
+        "name": "Butyrophilin (BTN) family interactions",
+        "id": "R-HSA-8851680",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-8851680",
+        "count": "12"
+    },
+    {
+        "name": "Cell activation involved in immune response",
+        "id": "GO:0002263",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002263",
+        "count": "152"
+    },
+    {
+        "name": "Cellular extravasation",
+        "id": "GO:0045123",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0045123",
+        "count": "17"
+    },
+    {
+        "name": "Class I MHC mediated antigen processing & presentation",
+        "id": "R-HSA-983169",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-983169",
+        "count": "381"
+    },
+    {
+        "name": "Complement activation, alternative pathway",
+        "id": "GO:0006957",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0006957",
+        "count": "15"
+    },
+    {
+        "name": "Complement activation, classical pathway",
+        "id": "GO:0006958",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0006958",
+        "count": "39"
+    },
+    {
+        "name": "Complement activation",
+        "id": "GO:0006956",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0006956",
+        "count": "57"
+    },
+    {
+        "name": "Complement activation, lectin pathway",
+        "id": "GO:0001867",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0001867",
+        "count": "9"
+    },
+    {
+        "name": "Complement cascade",
+        "id": "R-HSA-166658",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-166658",
+        "count": "58"
+    },
+    {
+        "name": "Complement component C5a signaling pathway",
+        "id": "GO:0038178",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0038178",
+        "count": "3"
+    },
+    {
+        "name": "Complement receptor mediated signaling pathway",
+        "id": "GO:0002430",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002430",
+        "count": "15"
+    },
+    {
+        "name": "Costimulation by the CD28 family",
+        "id": "R-HSA-388841",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-388841",
+        "count": "69"
+    },
+    {
+        "name": "C-type lectin receptors (CLRs)",
+        "id": "R-HSA-5621481",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-5621481",
+        "count": "143"
+    },
+    {
+        "name": "Cytosolic sensors of pathogen-associated DNA ",
+        "id": "R-HSA-1834949",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-1834949",
+        "count": "64"
+    },
+    {
+        "name": "DAP12 interactions",
+        "id": "R-HSA-2172127",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-2172127",
+        "count": "45"
+    },
+    {
+        "name": "DDX58/IFIH1-mediated induction of interferon-alpha/beta",
+        "id": "R-HSA-168928",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-168928",
+        "count": "82"
+    },
+    {
+        "name": "Diapedesis",
+        "id": "GO:0050904",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0050904",
+        "count": "7"
+    },
+    {
+        "name": "Fc epsilon receptor (FCERI) signaling",
+        "id": "R-HSA-2454202",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-2454202",
+        "count": "134"
+    },
+    {
+        "name": "Fcgamma receptor (FCGR) dependent phagocytosis",
+        "id": "R-HSA-2029480",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-2029480",
+        "count": "86"
+    },
+    {
+        "name": "Fc-gamma receptor signaling pathway involved in phagocytosis",
+        "id": "GO:0038096",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0038096",
+        "count": "20"
+    },
+    {
+        "name": "Fc receptor mediated stimulatory signaling pathway",
+        "id": "GO:0002431",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002431",
+        "count": "22"
+    },
+    {
+        "name": "FLT3 Signaling",
+        "id": "R-HSA-9607240",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-9607240",
+        "count": "38"
+    },
+    {
+        "name": "Gamma-delta T cell activation",
+        "id": "GO:0046629",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0046629",
+        "count": "20"
+    },
+    {
+        "name": "Germinal center formation",
+        "id": "GO:0002467",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002467",
+        "count": "10"
+    },
+    {
+        "name": "Granuloma formation",
+        "id": "GO:0002432",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002432",
+        "count": "1"
+    },
+    {
+        "name": "Growth hormone receptor signaling",
+        "id": "R-HSA-982772",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-982772",
+        "count": "24"
+    },
+    {
+        "name": "Humoral immune response mediated by circulating immunoglobulin",
+        "id": "GO:0002455",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002455",
+        "count": "5"
+    },
+    {
+        "name": "Immune complex clearance",
+        "id": "GO:0002434",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002434",
+        "count": "3"
+    },
+    {
+        "name": "Immune response in gut-associated lymphoid tissue",
+        "id": "GO:0002387",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002387",
+        "count": "4"
+    },
+    {
+        "name": "Immune response involved in response to exogenous dsRNA",
+        "id": "GO:1902615",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:1902615",
+        "count": "1"
+    },
+    {
+        "name": "Immune response-regulating cell surface receptor signaling pathway involved in phagocytosis",
+        "id": "GO:0002433",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002433",
+        "count": "20"
+    },
+    {
+        "name": "Immune response to tumor cell",
+        "id": "GO:0002418",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002418",
+        "count": "7"
+    },
+    {
+        "name": "Immune system development",
+        "id": "GO:0002520",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002520",
+        "count": "4"
+    },
+    {
+        "name": "Immunological memory process",
+        "id": "GO:0090713",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0090713",
+        "count": "5"
+    },
+    {
+        "name": "Immunoregulatory interactions between a Lymphoid and a non-Lymphoid cell",
+        "id": "R-HSA-198933",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-198933",
+        "count": "133"
+    },
+    {
+        "name": "Induced systemic resistance",
+        "id": "GO:0009682",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0009682",
+        "count": "1"
+    },
+    {
+        "name": "Inflammatory response to antigenic stimulus",
+        "id": "GO:0002437",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002437",
+        "count": "42"
+    },
+    {
+        "name": "Innate immune response activating cell surface receptor signaling pathway",
+        "id": "GO:0002220",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002220",
+        "count": "66"
+    },
+    {
+        "name": "Innate immune response-activating signaling pathway",
+        "id": "GO:0002758",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002758",
+        "count": "139"
+    },
+    {
+        "name": "Innate immune response in mucosa",
+        "id": "GO:0002227",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002227",
+        "count": "27"
+    },
+    {
+        "name": "Interferon alpha/beta signaling",
+        "id": "R-HSA-909733",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-909733",
+        "count": "77"
+    },
+    {
+        "name": "Interferon gamma signaling",
+        "id": "R-HSA-877300",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-877300",
+        "count": "96"
+    },
+    {
+        "name": "Interleukin-10 signaling",
+        "id": "R-HSA-6783783",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-6783783",
+        "count": "47"
+    },
+    {
+        "name": "Interleukin-12 family signaling",
+        "id": "R-HSA-447115",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-447115",
+        "count": "57"
+    },
+    {
+        "name": "Interleukin-17 signaling",
+        "id": "R-HSA-448424",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-448424",
+        "count": "72"
+    },
+    {
+        "name": "Interleukin-1 family signaling",
+        "id": "R-HSA-446652",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-446652",
+        "count": "153"
+    },
+    {
+        "name": "Interleukin-20 family signaling",
+        "id": "R-HSA-8854691",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-8854691",
+        "count": "25"
+    },
+    {
+        "name": "Interleukin-2 family signaling",
+        "id": "R-HSA-451927",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-451927",
+        "count": "44"
+    },
+    {
+        "name": "Interleukin-3, Interleukin-5 and GM-CSF signaling",
+        "id": "R-HSA-512988",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-512988",
+        "count": "48"
+    },
+    {
+        "name": "Interleukin-4 and Interleukin-13 signaling",
+        "id": "R-HSA-6785807",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-6785807",
+        "count": "108"
+    },
+    {
+        "name": "Interleukin-6 family signaling",
+        "id": "R-HSA-6783589",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-6783589",
+        "count": "24"
+    },
+    {
+        "name": "Interleukin-7 signaling",
+        "id": "R-HSA-1266695",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-1266695",
+        "count": "36"
+    },
+    {
+        "name": "Leukocyte activation involved in immune response",
+        "id": "GO:0002366",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002366",
+        "count": "148"
+    },
+    {
+        "name": "Leukocyte activation involved in inflammatory response",
+        "id": "GO:0002269",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002269",
+        "count": "34"
+    },
+    {
+        "name": "Leukocyte adhesive activation",
+        "id": "GO:0050902",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0050902",
+        "count": "2"
+    },
+    {
+        "name": "Leukocyte chemotaxis",
+        "id": "GO:0030595",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0030595",
+        "count": "146"
+    },
+    {
+        "name": "Leukocyte degranulation",
+        "id": "GO:0043299",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0043299",
+        "count": "38"
+    },
+    {
+        "name": "Leukocyte homeostasis",
+        "id": "GO:0001776",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0001776",
+        "count": "81"
+    },
+    {
+        "name": "Leukocyte mediated cytotoxicity",
+        "id": "GO:0001909",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0001909",
+        "count": "66"
+    },
+    {
+        "name": "Leukocyte mediated immunity",
+        "id": "GO:0002443",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002443",
+        "count": "194"
+    },
+    {
+        "name": "Leukocyte migration involved in immune response",
+        "id": "GO:0002522",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002522",
+        "count": "3"
+    },
+    {
+        "name": "Leukocyte migration involved in inflammatory response",
+        "id": "GO:0002523",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002523",
+        "count": "19"
+    },
+    {
+        "name": "Lymphocyte activation involved in immune response",
+        "id": "GO:0002285",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002285",
+        "count": "118"
+    },
+    {
+        "name": "Lymphocyte costimulation",
+        "id": "GO:0031294",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0031294",
+        "count": "45"
+    },
+    {
+        "name": "Lymphocyte proliferation",
+        "id": "GO:0046651",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0046651",
+        "count": "128"
+    },
+    {
+        "name": "Memory B cell differentiation",
+        "id": "GO:0002319",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002319",
+        "count": "1"
+    },
+    {
+        "name": "Memory T cell activation",
+        "id": "GO:0035709",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0035709",
+        "count": "2"
+    },
+    {
+        "name": "Memory T cell differentiation",
+        "id": "GO:0043379",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0043379",
+        "count": "1"
+    },
+    {
+        "name": "MHC class II antigen presentation",
+        "id": "R-HSA-2132295",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-2132295",
+        "count": "123"
+    },
+    {
+        "name": "Mononuclear cell migration",
+        "id": "GO:0071674",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0071674",
+        "count": "114"
+    },
+    {
+        "name": "Myeloid cell homeostasis",
+        "id": "GO:0002262",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002262",
+        "count": "32"
+    },
+    {
+        "name": "Myeloid leukocyte activation",
+        "id": "GO:0002274",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002274",
+        "count": "121"
+    },
+    {
+        "name": "Myeloid leukocyte migration",
+        "id": "GO:0097529",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0097529",
+        "count": "137"
+    },
+    {
+        "name": "Natural killer cell activation",
+        "id": "GO:0030101",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0030101",
+        "count": "56"
+    },
+    {
+        "name": "Natural killer cell differentiation",
+        "id": "GO:0001779",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0001779",
+        "count": "16"
+    },
+    {
+        "name": "Natural killer cell mediated cytotoxicity",
+        "id": "GO:0042267",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0042267",
+        "count": "33"
+    },
+    {
+        "name": "Natural killer cell mediated immune response to tumor cell",
+        "id": "GO:0002423",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002423",
+        "count": "1"
+    },
+    {
+        "name": "Natural killer cell mediated immunity",
+        "id": "GO:0002228",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002228",
+        "count": "35"
+    },
+    {
+        "name": "Negative regulation of activation-induced cell death of T cells",
+        "id": "GO:0070236",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0070236",
+        "count": "3"
+    },
+    {
+        "name": "Negative regulation of antigen processing and presentation",
+        "id": "GO:0002578",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002578",
+        "count": "9"
+    },
+    {
+        "name": "Negative regulation of antigen receptor-mediated signaling pathway",
+        "id": "GO:0050858",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0050858",
+        "count": "34"
+    },
+    {
+        "name": "Negative regulation of cytoplasmic pattern recognition receptor signaling pathway",
+        "id": "GO:0039532",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0039532",
+        "count": "38"
+    },
+    {
+        "name": "Negative regulation of germinal center formation",
+        "id": "GO:0002635",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002635",
+        "count": "2"
+    },
+    {
+        "name": "Negative regulation of hemocyte differentiation",
+        "id": "GO:0045611",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0045611",
+        "count": "1"
+    },
+    {
+        "name": "Negative regulation of hemopoiesis",
+        "id": "GO:1903707",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:1903707",
+        "count": "119"
+    },
+    {
+        "name": "Negative regulation of immune effector process",
+        "id": "GO:0002698",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002698",
+        "count": "124"
+    },
+    {
+        "name": "Negative regulation of immune response",
+        "id": "GO:0050777",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0050777",
+        "count": "199"
+    },
+    {
+        "name": "Negative regulation of isotype switching",
+        "id": "GO:0045829",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0045829",
+        "count": "4"
+    },
+    {
+        "name": "Negative regulation of leukocyte activation",
+        "id": "GO:0002695",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002695",
+        "count": "195"
+    },
+    {
+        "name": "Negative regulation of leukocyte migration",
+        "id": "GO:0002686",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002686",
+        "count": "56"
+    },
+    {
+        "name": "Negative regulation of mast cell apoptotic process",
+        "id": "GO:0033026",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0033026",
+        "count": "1"
+    },
+    {
+        "name": "Negative regulation of respiratory burst involved in inflammatory response",
+        "id": "GO:0060266",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0060266",
+        "count": "5"
+    },
+    {
+        "name": "Negative regulation of T cell costimulation",
+        "id": "GO:2000524",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:2000524",
+        "count": "3"
+    },
+    {
+        "name": "Negative regulation of tolerance induction",
+        "id": "GO:0002644",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002644",
+        "count": "1"
+    },
+    {
+        "name": "Negative regulation of toll-like receptor 2 signaling pathway",
+        "id": "GO:0034136",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0034136",
+        "count": "7"
+    },
+    {
+        "name": "Negative regulation of toll-like receptor 4 signaling pathway",
+        "id": "GO:0034144",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0034144",
+        "count": "20"
+    },
+    {
+        "name": "Negative regulation of toll-like receptor 5 signaling pathway",
+        "id": "GO:0034148",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0034148",
+        "count": "1"
+    },
+    {
+        "name": "Negative regulation of toll-like receptor signaling pathway",
+        "id": "GO:0034122",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0034122",
+        "count": "22"
+    },
+    {
+        "name": "Neutrophil degranulation",
+        "id": "R-HSA-6798695",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-6798695",
+        "count": "479"
+    },
+    {
+        "name": "Nucleotide-binding domain, leucine rich repeat containing receptor (NLR) signaling pathways",
+        "id": "R-HSA-168643",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-168643",
+        "count": "57"
+    },
+    {
+        "name": "Opsonization",
+        "id": "GO:0008228",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0008228",
+        "count": "8"
+    },
+    {
+        "name": "Organ or tissue specific immune response",
+        "id": "GO:0002251",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002251",
+        "count": "37"
+    },
+    {
+        "name": "Other interleukin signaling",
+        "id": "R-HSA-449836",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-449836",
+        "count": "24"
+    },
+    {
+        "name": "Peripheral B cell tolerance induction",
+        "id": "GO:0002451",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002451",
+        "count": "1"
+    },
+    {
+        "name": "Peripheral T cell tolerance induction",
+        "id": "GO:0002458",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002458",
+        "count": "1"
+    },
+    {
+        "name": "Peripheral tolerance induction",
+        "id": "GO:0002465",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002465",
+        "count": "2"
+    },
+    {
+        "name": "Plasmacytoid dendritic cell activation",
+        "id": "GO:0002270",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002270",
+        "count": "3"
+    },
+    {
+        "name": "Primary adaptive immune response",
+        "id": "GO:0090720",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0090720",
+        "count": "1"
+    },
+    {
+        "name": "Production of molecular mediator of immune response",
+        "id": "GO:0002440",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002440",
+        "count": "92"
+    },
+    {
+        "name": "Prolactin receptor signaling",
+        "id": "R-HSA-1170546",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-1170546",
+        "count": "15"
+    },
+    {
+        "name": "Rap1 signalling",
+        "id": "R-HSA-392517",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-392517",
+        "count": "16"
+    },
+    {
+        "name": "Respiratory burst involved in defense response",
+        "id": "GO:0002679",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002679",
+        "count": "9"
+    },
+    {
+        "name": "Respiratory burst involved in inflammatory response",
+        "id": "GO:0002536",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002536",
+        "count": "2"
+    },
+    {
+        "name": "ROS and RNS production in phagocytes",
+        "id": "R-HSA-1222556",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-1222556",
+        "count": "36"
+    },
+    {
+        "name": "Signaling by CSF1 (M-CSF) in myeloid cells",
+        "id": "R-HSA-9680350",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-9680350",
+        "count": "31"
+    },
+    {
+        "name": "Signaling by CSF3 (G-CSF)",
+        "id": "R-HSA-9674555",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-9674555",
+        "count": "30"
+    },
+    {
+        "name": "Signaling by the B Cell Receptor (BCR)",
+        "id": "R-HSA-983705",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-983705",
+        "count": "112"
+    },
+    {
+        "name": "Somatic diversification of immune receptors",
+        "id": "GO:0002200",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002200",
+        "count": "53"
+    },
+    {
+        "name": "Stimulatory C-type lectin receptor signaling pathway",
+        "id": "GO:0002223",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002223",
+        "count": "23"
+    },
+    {
+        "name": "T cell activation involved in immune response",
+        "id": "GO:0002286",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002286",
+        "count": "69"
+    },
+    {
+        "name": "T cell costimulation",
+        "id": "GO:0031295",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0031295",
+        "count": "44"
+    },
+    {
+        "name": "T cell differentiation",
+        "id": "GO:0030217",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0030217",
+        "count": "144"
+    },
+    {
+        "name": "T cell mediated cytotoxicity",
+        "id": "GO:0001913",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0001913",
+        "count": "16"
+    },
+    {
+        "name": "T cell mediated immune response to tumor cell",
+        "id": "GO:0002424",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002424",
+        "count": "3"
+    },
+    {
+        "name": "T cell proliferation",
+        "id": "GO:0042098",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0042098",
+        "count": "74"
+    },
+    {
+        "name": "T cell selection",
+        "id": "GO:0045058",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0045058",
+        "count": "28"
+    },
+    {
+        "name": "TCR signaling",
+        "id": "R-HSA-202403",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-202403",
+        "count": "120"
+    },
+    {
+        "name": "TNFR2 non-canonical NF-kB pathway",
+        "id": "R-HSA-5668541",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-5668541",
+        "count": "102"
+    },
+    {
+        "name": "Tolerance induction dependent upon immune response",
+        "id": "GO:0002461",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002461",
+        "count": "3"
+    },
+    {
+        "name": "Tolerance induction",
+        "id": "GO:0002507",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0002507",
+        "count": "19"
+    },
+    {
+        "name": "Toll-like Receptor Cascades",
+        "id": "R-HSA-168898",
+        "source": "Reactome",
+        "link": "https://reactome.org/PathwayBrowser/#/R-HSA-168898",
+        "count": "172"
+    },
+    {
+        "name": "Type 2 immune response",
+        "id": "GO:0042092",
+        "source": "GO",
+        "link": "https://amigo.geneontology.org/amigo/term/GO:0042092",
+        "count": "7"
+    }
+]
