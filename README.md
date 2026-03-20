@@ -21,7 +21,9 @@ The following files were created & run in this order to produce an output:
 1. load_data.ipynb
 2. preprocess.ipynb
 3. deg_analysis.ipynb
-4. cox_survival_analysis.ipynb
+4. univariate_cox.ipynb
+5. penalized_cox.ipynb
+6. multivariate_cox.ipynb
 
 ### Notes
 
