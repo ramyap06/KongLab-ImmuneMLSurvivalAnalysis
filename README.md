@@ -1,18 +1,27 @@
 # kong-lab-ml-project
-Machine learning research project developed as a research assistant to study immune gene signatures in breast cancer.
+Machine learning research project studying immune gene signatures in breast cancer.
 
 ## Sample ReadME
 
 ### Package Installation
 
 The following libaries are necessary to run these files:
+
+R Libraries
 - tidyverse
 - GEOquery
 - affy
 - limma
 - survival
 
-etc
+Python Libraries
+- pandas
+- numpy
+- lifelines
+- matplotlib
+- warnings
+- scikit-learn
+- scikit-survival
 
 ### Experimentation Order
 
@@ -27,6 +36,6 @@ The following files were created & run in this order to produce an output:
 
 ### Notes
 
-- Files labeled {name}_learning.ipynb are not used to produce output but simply to independently learn & pratice a particular process/concept.
+- Files labeled {name}_learning.ipynb are not used to produce output but simply to independently learn & practice a particular process/concept.
 
 - To load data, simply change the curr variable to the name of the dataset you want to load and rerun the notebook.
