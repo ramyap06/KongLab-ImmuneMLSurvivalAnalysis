@@ -1,0 +1,5 @@
+gene,beta,HR,HR_lower_95,HR_upper_95,p_value,role
+S100P,0.2351,1.2651,1.0712,1.4941,0.0056,danger
+FBXL16,-0.8162,0.4421,0.2363,0.8274,0.0107,protective
+MICB,-0.4297,0.6507,0.4468,0.9477,0.0251,protective
+KLHL5,-0.9658,0.3807,0.1486,0.975,0.0442,protective
