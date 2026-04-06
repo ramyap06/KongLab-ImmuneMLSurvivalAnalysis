@@ -12,3 +12,6 @@
 # Large intermediate outputs
 *.rds
 *.RData
+
+# Trained models
+models/
