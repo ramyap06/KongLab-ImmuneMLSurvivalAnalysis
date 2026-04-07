@@ -15,3 +15,8 @@
 
 # Trained models
 models/
+
+# Training datasets
+datasets/
+*.csv
+*.rds
