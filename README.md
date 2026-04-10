@@ -1,4 +1,4 @@
-# kong-lab-ml-project
+# KongLab-ImmuneMLSurvivalAnalysis
 Machine learning research project studying immune gene signatures in breast cancer prognosis using relapse-free survival (RFS) as the clinical endpoint.
 
 ## Project Overview
