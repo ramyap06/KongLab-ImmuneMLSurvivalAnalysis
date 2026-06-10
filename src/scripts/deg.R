@@ -7,7 +7,7 @@ ROOT_DIR <- normalizePath(file.path(dirname(sys.frame(1)$ofile), "../.."))
 PRE_DIR          <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
 DEG_DIR          <- file.path(ROOT_DIR, "data/deg_rds_files")
 IMMUNE_GENES_DIR <- file.path(ROOT_DIR, "data/immune_genes_and_tf")
-VIS_DIR          <- file.path(ROOT_DIR, "visuals/deg")
+VIS_DIR          <- file.path(ROOT_DIR, "results/deg")
 TF_PATH          <- file.path(IMMUNE_GENES_DIR, "transcription_factors.csv")
 
 # defining dataset, only using training dataset
