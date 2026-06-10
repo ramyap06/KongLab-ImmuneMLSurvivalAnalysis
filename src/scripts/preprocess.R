@@ -2,12 +2,14 @@ library(tidyverse)
 library(GEOquery)
 library(affy)
 
-CEL_DIR  <- "../../data/cel_files"
-TAR_DIR  <- "../../data/tar_files"
-AFFY_DIR <- "../../data/raw_affy_rds_files"
-META_DIR <- "../../data/geo_metadata_rds_files"
-CLIN_DIR <- "../../data/raw_clinical_rds_files"
-PRE_DIR  <- "../../data/preprocessed_rds_files"
+ROOT_DIR <- normalizePath(file.path(dirname(sys.frame(1)$ofile), "../.."))
+
+CEL_DIR  <- file.path(ROOT_DIR, "data/cel_files")
+TAR_DIR  <- file.path(ROOT_DIR, "data/tar_files")
+AFFY_DIR <- file.path(ROOT_DIR, "data/raw_affy_rds_files")
+META_DIR <- file.path(ROOT_DIR, "data/geo_metadata_rds_files")
+CLIN_DIR <- file.path(ROOT_DIR, "data/raw_clinical_rds_files")
+PRE_DIR  <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
 
 DATASET_CONFIGS <- list(
     GSE42568 = list(
@@ -150,8 +152,8 @@ process_clinical_metadata <- function(gse, cfg, dataset_name) {
 }
 
 sync_expression_to_clinical <- function(expr, clinical) {
-    retained_cols <- c("gene_symbol", intersect(colnames(expr), clinical$geo_accession))
-    expr[, retained_cols]
+    retained_samples <- intersect(clinical$geo_accession, colnames(expr))
+    expr[, c("gene_symbol", retained_samples)]
 }
 
 export_processed_datasets <- function(expression_matrix, clinical_metadata, dataset_name) {

@@ -1,12 +1,20 @@
 library(tidyverse)
 library(GEOquery)
 library(affy)
+library(jsonlite)
 
-# defining datapath
-CEL_DIR <- "../data/cel_files"
-TAR_DIR <- "../data/tar_files"
-AFFY_DIR <- "../data/raw_affy_rds_files"
-META_DIR <- "../data/geo_metadata_rds_files"
+ROOT_DIR <- normalizePath(file.path(dirname(sys.frame(1)$ofile), "../.."))
+
+CEL_DIR          <- file.path(ROOT_DIR, "data/cel_files")
+TAR_DIR          <- file.path(ROOT_DIR, "data/tar_files")
+AFFY_DIR         <- file.path(ROOT_DIR, "data/raw_affy_rds_files")
+META_DIR         <- file.path(ROOT_DIR, "data/geo_metadata_rds_files")
+IMMUNE_GENES_DIR <- file.path(ROOT_DIR, "data/immune_genes")
+IMMUNE_PATH      <- file.path(IMMUNE_GENES_DIR, "all_immune_genes_ImmPort.json")
+
+IMMPORT_BASE_URL <- "https://s3.immport.org/release/genelists/current/"
+
+SIGNATURE_GENES <- c("TSLP", "BIRC5", "S100B", "MDK", "S100P", "RARRES3", "BLNK", "ACO1")
 
 # defining datasets
 datasets <- c("GSE42568", "GSE21653", "GSE20711", "GSE88770")
@@ -48,12 +56,43 @@ prepare_raw_affy_dataset <- function(name) {
     message("[", name, "] Done.")
 }
 
+# ── immune gene catalog ───────────────────────────────────────────────────────
+
+load_immune_gene_catalog <- function(catalog_path, base_url, signature_genes) {
+    message("Loading immune gene catalog from ImmPort (GO/Reactome term lists)...")
+
+    immune_data  <- fromJSON(catalog_path)
+    immune_genes <- list()
+
+    for (i in seq_len(nrow(immune_data))) {
+        id  <- immune_data$id[i]
+        url <- paste0(base_url, id, ".json")
+
+        # if the GO/Reactome term has no published gene list skip silently
+        try({
+            json_data   <- fromJSON(url)
+            gene_symbol <- json_data$genes$Symbol
+            if (!is.null(gene_symbol)) immune_genes[[id]] <- gene_symbol
+        }, silent = TRUE)
+    }
+
+    immune_genes <- unique(unlist(immune_genes))
+    unique(c(immune_genes, signature_genes))
+}
+
+# ── main ──────────────────────────────────────────────────────────────────────
+
 # ONLY RE-RUN IF STARTING FROM SCRATCH DO NOT RE-RUN REGULARLY
 
-for (dataset in datasets) {
-    load_geo_data(dataset)
-}
+# for (dataset in datasets) {
+#     load_geo_data(dataset)
+# }
 
-for (dataset in datasets) {
-    prepare_raw_affy_dataset(dataset)
-}
+# for (dataset in datasets) {
+#     prepare_raw_affy_dataset(dataset)
+# }
+
+dir.create(IMMUNE_GENES_DIR, recursive = TRUE, showWarnings = FALSE)
+immune_genes <- load_immune_gene_catalog(IMMUNE_PATH, IMMPORT_BASE_URL, SIGNATURE_GENES)
+saveRDS(immune_genes, file.path(IMMUNE_GENES_DIR, "immune_genes.rds"))
+message("Saved: ", file.path(IMMUNE_GENES_DIR, "immune_genes.rds"))
