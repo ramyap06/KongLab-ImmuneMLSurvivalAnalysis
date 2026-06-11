@@ -1,3 +1,14 @@
+# Python/Jupyter
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# R
+.Rhistory
+.Rproj.user/
+
 # Raw microarray data (Affymetrix CEL files)
 *.CEL
 *.cel

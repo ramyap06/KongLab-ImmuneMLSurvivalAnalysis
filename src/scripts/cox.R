@@ -25,7 +25,7 @@ set.seed(42)
 
 load_cox_data <- function(dataset_name) {
     message("[", dataset_name, "] Loading DEG expression matrix & clinical metadata...")
-    expr_rfs <- readRDS(file.path(DEG_DIR, paste0(dataset_name, "_deg_expression_matrix_with_rfs.rds")))
+    expr_rfs <- readRDS(file.path(DEG_DIR, paste0(dataset_name, "_deg_expression_matrix_with_rfs_legacy_immune.rds")))
     clinical <- readRDS(file.path(PRE_DIR, paste0(dataset_name, "_clinical_metadata.rds")))
     list(expr_rfs = expr_rfs, clinical = clinical)
 }
