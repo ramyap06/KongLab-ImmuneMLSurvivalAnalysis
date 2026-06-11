@@ -9,8 +9,10 @@ CEL_DIR          <- file.path(ROOT_DIR, "data/cel_files")
 TAR_DIR          <- file.path(ROOT_DIR, "data/tar_files")
 AFFY_DIR         <- file.path(ROOT_DIR, "data/raw_affy_rds_files")
 META_DIR         <- file.path(ROOT_DIR, "data/geo_metadata_rds_files")
-IMMUNE_GENES_DIR <- file.path(ROOT_DIR, "data/immune_genes")
+IMMUNE_GENES_DIR <- file.path(ROOT_DIR, "data/immune_genes_and_tf")
 IMMUNE_PATH      <- file.path(IMMUNE_GENES_DIR, "all_immune_genes_ImmPort.json")
+LEGACY_DIR       <- file.path(IMMUNE_GENES_DIR, "legacy")
+LEGACY_OUT_PATH  <- file.path(IMMUNE_GENES_DIR, "legacy_immune_genes_ImmPort.txt")
 
 IMMPORT_BASE_URL <- "https://s3.immport.org/release/genelists/current/"
 
@@ -58,9 +60,7 @@ prepare_raw_affy_dataset <- function(name) {
 
 # ── immune gene catalog ───────────────────────────────────────────────────────
 
-load_immune_gene_catalog <- function(catalog_path, base_url, signature_genes) {
-    message("Loading immune gene catalog from ImmPort (GO/Reactome term lists)...")
-
+fetch_immune_gene_catalog <- function(catalog_path, base_url, signature_genes) {
     immune_data  <- fromJSON(catalog_path)
     immune_genes <- list()
 
@@ -80,6 +80,29 @@ load_immune_gene_catalog <- function(catalog_path, base_url, signature_genes) {
     unique(c(immune_genes, signature_genes))
 }
 
+build_immune_gene_catalog <- function(out_dir, catalog_path, base_url, signature_genes) {
+    message("Building ImmPort immune gene catalog (GO/Reactome term lists)...")
+    dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+    immune_genes <- fetch_immune_gene_catalog(catalog_path, base_url, signature_genes)
+    out_path <- file.path(out_dir, "immune_genes.rds")
+    saveRDS(immune_genes, out_path)
+    message("Saved ", length(immune_genes), " unique genes: ", out_path)
+    invisible(immune_genes)
+}
+
+# ── legacy immune gene merge ─────────────────────────────────────────────────
+
+build_legacy_immune_gene_list <- function(legacy_dir, out_path) {
+    message("Building legacy immune gene list from ", legacy_dir, "...")
+    txt_files   <- list.files(legacy_dir, pattern = "\\.txt$", full.names = TRUE)
+    all_symbols <- sort(unique(unlist(lapply(txt_files, function(f) {
+        read.delim(f, stringsAsFactors = FALSE)$Symbol
+    }))))
+    writeLines(all_symbols, out_path)
+    message("Saved ", length(all_symbols), " unique genes: ", out_path)
+    invisible(all_symbols)
+}
+
 # ── main ──────────────────────────────────────────────────────────────────────
 
 # ONLY RE-RUN IF STARTING FROM SCRATCH DO NOT RE-RUN REGULARLY
@@ -92,7 +115,5 @@ load_immune_gene_catalog <- function(catalog_path, base_url, signature_genes) {
 #     prepare_raw_affy_dataset(dataset)
 # }
 
-dir.create(IMMUNE_GENES_DIR, recursive = TRUE, showWarnings = FALSE)
-immune_genes <- load_immune_gene_catalog(IMMUNE_PATH, IMMPORT_BASE_URL, SIGNATURE_GENES)
-saveRDS(immune_genes, file.path(IMMUNE_GENES_DIR, "immune_genes.rds"))
-message("Saved: ", file.path(IMMUNE_GENES_DIR, "immune_genes.rds"))
+build_immune_gene_catalog(IMMUNE_GENES_DIR, IMMUNE_PATH, IMMPORT_BASE_URL, SIGNATURE_GENES)
+build_legacy_immune_gene_list(LEGACY_DIR, LEGACY_OUT_PATH)

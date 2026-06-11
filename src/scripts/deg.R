@@ -9,6 +9,7 @@ DEG_DIR          <- file.path(ROOT_DIR, "data/deg_rds_files")
 IMMUNE_GENES_DIR <- file.path(ROOT_DIR, "data/immune_genes_and_tf")
 VIS_DIR          <- file.path(ROOT_DIR, "results/deg")
 TF_PATH          <- file.path(IMMUNE_GENES_DIR, "transcription_factors.csv")
+LEGACY_IMMUNE_PATH <- file.path(IMMUNE_GENES_DIR, "legacy_immune_genes_ImmPort.txt")
 
 # defining dataset, only using training dataset
 DATASET <- "GSE42568"
@@ -79,7 +80,7 @@ extract_degs <- function(fit_contrast, p_cutoff, adj_p_cutoff, lfc_cutoff, datas
     ]
 
     dir.create(DEG_DIR, recursive = TRUE, showWarnings = FALSE)
-    saveRDS(deg_genes, file.path(DEG_DIR, paste0(dataset_name, "_deg_stats.rds")))
+    saveRDS(deg_genes, file.path(DEG_DIR, paste0(dataset_name, "_deg_stats_all.rds")))
     message("Saved: ", dataset_name, "_deg_stats.rds (", nrow(deg_genes), " DEGs before gene-set filtering)")
 
     list(all_genes = all_genes, deg_genes = deg_genes, deg_gene_symbols = deg_genes$gene_symbol)
@@ -192,7 +193,12 @@ plot_deg_heatmap <- function(expr, deg_genes, clinical, signature_genes, n_top, 
 load_transcription_factors <- function(tf_path) {
     message("Loading tumor-related transcription factors...")
     tf_df <- read.csv(tf_path)
-    tf_df$Target_Gene
+    tf_df$Transcription_Factor
+}
+
+load_legacy_immune_genes <- function(path) {
+    message("Loading legacy ImmPort immune gene list...")
+    readLines(path)
 }
 
 filter_degs_by_gene_set <- function(deg_genes, gene_set) {
@@ -237,12 +243,13 @@ build_expression_with_rfs <- function(expr_transposed, clinical) {
     merged
 }
 
-export_deg_outputs <- function(tumor_tf_deg_genes, expr_with_rfs, dataset_name) {
+export_deg_outputs <- function(tumor_tf_deg_genes, expr_with_rfs, expr_with_rfs_legacy_immune, dataset_name) {
     message("[", dataset_name, "] Exporting DEG outputs...")
     dir.create(DEG_DIR, recursive = TRUE, showWarnings = FALSE)
 
-    saveRDS(tumor_tf_deg_genes, file.path(DEG_DIR, paste0(dataset_name, "_deg_tf_filtered.rds")))
-    saveRDS(expr_with_rfs,      file.path(DEG_DIR, paste0(dataset_name, "_deg_expression_matrix_with_rfs.rds")))
+    saveRDS(tumor_tf_deg_genes,         file.path(DEG_DIR, paste0(dataset_name, "_deg_tf_filtered.rds")))
+    saveRDS(expr_with_rfs,              file.path(DEG_DIR, paste0(dataset_name, "_deg_expression_matrix_with_rfs.rds")))
+    saveRDS(expr_with_rfs_legacy_immune, file.path(DEG_DIR, paste0(dataset_name, "_deg_expression_matrix_with_rfs_legacy_immune.rds")))
 }
 
 # ── main ──────────────────────────────────────────────────────────────────────
@@ -265,18 +272,22 @@ plot_deg_heatmap(expr, degs$deg_genes, clinical, SIGNATURE_GENES, n_top = 40,
 
 # narrow the DEG list down to biologically relevant subsets: genes with known
 # immune roles, and genes that are tumor-related transcription factors
-immune_genes <- readRDS(file.path(IMMUNE_GENES_DIR, "immune_genes.rds"))
-tumor_tf     <- load_transcription_factors(TF_PATH)
+immune_genes        <- readRDS(file.path(IMMUNE_GENES_DIR, "immune_genes.rds"))
+tumor_tf            <- load_transcription_factors(TF_PATH)
+legacy_immune_genes <- load_legacy_immune_genes(LEGACY_IMMUNE_PATH)
 
-immune_deg_genes   <- filter_degs_by_gene_set(degs$deg_genes, immune_genes)
-tumor_tf_deg_genes <- filter_degs_by_gene_set(degs$deg_genes, tumor_tf)
+immune_deg_genes        <- filter_degs_by_gene_set(degs$deg_genes, immune_genes)
+tumor_tf_deg_genes      <- filter_degs_by_gene_set(degs$deg_genes, tumor_tf)
+legacy_immune_deg_genes <- filter_degs_by_gene_set(degs$deg_genes, legacy_immune_genes)
 
-# build the expression matrix for the immune DEGs and transpose it for
-# downstream survival modelling (samples as rows, genes as columns)
-expr_transposed <- build_transposed_expression(expr, immune_deg_genes$gene_symbol)
+# build expression matrices for each gene subset and transpose for downstream
+# survival modelling (samples as rows, genes as columns)
+expr_transposed                <- build_transposed_expression(expr, immune_deg_genes$gene_symbol)
+expr_transposed_legacy_immune  <- build_transposed_expression(expr, legacy_immune_deg_genes$gene_symbol)
 
 # merge with clinical RFS columns and restrict to tumor samples with valid RFS
-expr_with_rfs <- build_expression_with_rfs(expr_transposed, clinical)
+expr_with_rfs                <- build_expression_with_rfs(expr_transposed, clinical)
+expr_with_rfs_legacy_immune  <- build_expression_with_rfs(expr_transposed_legacy_immune, clinical)
 
-export_deg_outputs(tumor_tf_deg_genes, expr_with_rfs, DATASET)
+export_deg_outputs(tumor_tf_deg_genes, expr_with_rfs, expr_with_rfs_legacy_immune, DATASET)
 message("[", DATASET, "] DEG analysis done.")
