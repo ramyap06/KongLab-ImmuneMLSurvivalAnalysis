@@ -3,7 +3,22 @@ library(glmnet)
 library(ggplot2)
 library(survminer)
 
-ROOT_DIR <- normalizePath(file.path(dirname(sys.frame(1)$ofile), "../.."))
+message <- function(..., domain = NULL, appendLF = TRUE) {
+    cat(paste0(..., collapse = ""), if (appendLF) "\n" else "", sep = "")
+    invisible()
+}
+
+# Step 10: works for both source() and Rscript invocation
+script_path <- tryCatch(
+    normalizePath(sys.frame(1)$ofile),
+    error = function(e) {
+        args <- commandArgs(trailingOnly = FALSE)
+        f    <- args[startsWith(args, "--file=")]
+        if (length(f) == 0) stop("Cannot determine script path — run via source() or Rscript.")
+        normalizePath(sub("--file=", "", f[1]))
+    }
+)
+ROOT_DIR <- normalizePath(file.path(dirname(script_path), "../.."))
 
 DEG_DIR <- file.path(ROOT_DIR, "data/deg_rds_files")
 PRE_DIR <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
@@ -17,15 +32,13 @@ SURV_COLS       <- c("geo_accession", "rfs_time", "rfs_event")
 P_CUTOFF    <- 0.05
 LASSO_ALPHA <- 1.0
 ENET_ALPHA  <- 0.9
-N_FOLDS     <- 5
-
-set.seed(42)
+N_FOLDS     <- 10  # Step 5: was 5
 
 # ── data loading ──────────────────────────────────────────────────────────────
 
 load_cox_data <- function(dataset_name) {
     message("[", dataset_name, "] Loading DEG expression matrix & clinical metadata...")
-    expr_rfs <- readRDS(file.path(DEG_DIR, paste0(dataset_name, "_deg_expression_matrix_with_rfs_legacy_immune.rds")))
+    expr_rfs <- readRDS(file.path(DEG_DIR, paste0(dataset_name, "_deg_expression_matrix_with_rfs.rds")))
     clinical <- readRDS(file.path(PRE_DIR, paste0(dataset_name, "_clinical_metadata.rds")))
     list(expr_rfs = expr_rfs, clinical = clinical)
 }
@@ -48,13 +61,14 @@ run_univariate_cox <- function(data, gene_cols,
                 data = sub
             )
             s <- summary(fit)
+            # Step 3: store full precision; round only at display time
             data.frame(
                 gene        = gene,
-                beta        = round(s$coefficients[1, "coef"],     4),
-                HR          = round(s$conf.int[1,   "exp(coef)"],  4),
-                HR_lower_95 = round(s$conf.int[1,   "lower .95"],  4),
-                HR_upper_95 = round(s$conf.int[1,   "upper .95"],  4),
-                p_value     = round(s$coefficients[1, "Pr(>|z|)"], 4),
+                beta        = s$coefficients[1, "coef"],
+                HR          = s$conf.int[1,   "exp(coef)"],
+                HR_lower_95 = s$conf.int[1,   "lower .95"],
+                HR_upper_95 = s$conf.int[1,   "upper .95"],
+                p_value     = s$coefficients[1, "Pr(>|z|)"],
                 stringsAsFactors = FALSE
             )
         }, error = function(e) {
@@ -64,13 +78,16 @@ run_univariate_cox <- function(data, gene_cols,
     }
 
     all_results <- do.call(rbind, Filter(Negate(is.null), results))
+    # Step 2: BH correction before filtering — raw p < 0.05 on hundreds of genes
+    # produces too many false positives
+    all_results$adj_p_value <- p.adjust(all_results$p_value, method = "BH")
     all_results <- all_results[order(all_results$p_value), ]
 
-    sig_results <- all_results[all_results$p_value < P_CUTOFF, ]
+    sig_results <- all_results[all_results$adj_p_value < P_CUTOFF, ]
     sig_results$role <- ifelse(sig_results$HR > 1, "danger", "protective")
 
     message("  Tested: ", nrow(all_results),
-            " | Significant (p < ", P_CUTOFF, "): ", nrow(sig_results))
+            " | Significant (BH-adj. p < ", P_CUTOFF, "): ", nrow(sig_results))
     list(all_results = all_results, sig_results = sig_results)
 }
 
@@ -78,12 +95,16 @@ run_univariate_cox <- function(data, gene_cols,
 
 run_penalized_cox <- function(X_train, y_train, alpha, nfolds, label) {
     message("Fitting ", label, " Cox (alpha = ", alpha, ", ", nfolds, "-fold CV)...")
+    # Step 1: type.measure = "C" requests Harrell's concordance index explicitly;
+    # the default ("deviance") is a loss so max() would select the worst model
     cv_fit     <- cv.glmnet(X_train, y_train, family = "cox",
-                            alpha = alpha, nfolds = nfolds, standardize = TRUE)
+                            alpha = alpha, nfolds = nfolds, standardize = TRUE,
+                            type.measure = "C")
     best_coefs <- as.vector(coef(cv_fit, s = "lambda.min"))
     names(best_coefs) <- colnames(X_train)
     selected   <- names(best_coefs[best_coefs != 0])
-    cindex     <- max(cv_fit$cvm)
+    # Step 1: extract C-index at lambda.min, not max() across the whole path
+    cindex     <- cv_fit$cvm[which(cv_fit$lambda == cv_fit$lambda.min)]
     message("  Non-zero genes: ", length(selected), " | CV C-index: ", round(cindex, 4))
     list(cv_fit = cv_fit, fit = cv_fit$glmnet.fit, selected_genes = selected, best_cindex = cindex)
 }
@@ -102,13 +123,14 @@ run_multivariate_cox <- function(train_data, gene_cols, clinical_cols) {
     cph <- coxph(as.formula(formula_str), data = train_data)
     s   <- summary(cph)
 
+    # Step 3: store full precision
     all_results <- data.frame(
         gene        = rownames(s$coefficients),
-        beta        = round(s$coefficients[, "coef"],     4),
-        HR          = round(s$conf.int[,   "exp(coef)"],  4),
-        HR_lower_95 = round(s$conf.int[,   "lower .95"],  4),
-        HR_upper_95 = round(s$conf.int[,   "upper .95"],  4),
-        p_value     = round(s$coefficients[, "Pr(>|z|)"], 4),
+        beta        = s$coefficients[, "coef"],
+        HR          = s$conf.int[,   "exp(coef)"],
+        HR_lower_95 = s$conf.int[,   "lower .95"],
+        HR_upper_95 = s$conf.int[,   "upper .95"],
+        p_value     = s$coefficients[, "Pr(>|z|)"],
         stringsAsFactors = FALSE, row.names = NULL
     )
     all_results <- all_results[order(all_results$p_value), ]
@@ -116,8 +138,15 @@ run_multivariate_cox <- function(train_data, gene_cols, clinical_cols) {
     sig_results <- all_results[all_results$p_value < P_CUTOFF & all_results$gene %in% gene_cols, ]
     sig_results$role <- ifelse(sig_results$HR > 1, "danger", "protective")
 
+    # Step 9: test proportional hazards assumption
+    ph_test  <- cox.zph(cph)
+    global_p <- ph_test$table["GLOBAL", "p"]
+    message("  PH assumption test (global p-value): ", round(global_p, 4))
+    if (global_p < 0.05)
+        warning("PH assumption may be violated (global p < 0.05). Inspect cox.zph() plots.")
+
     message("  Significant genes (p < ", P_CUTOFF, "): ", nrow(sig_results))
-    list(all_results = all_results, sig_results = sig_results)
+    list(all_results = all_results, sig_results = sig_results, model = cph)
 }
 
 # ── risk scoring ──────────────────────────────────────────────────────────────
@@ -144,7 +173,9 @@ plot_forest <- function(df, title) {
         geom_errorbarh(aes(xmin = HR_lower_95, xmax = HR_upper_95),
                        height = 0.35, linewidth = 1.1) +
         geom_point(size = 3) +
-        geom_text(aes(x = HR_upper_95, label = sprintf("p=%.3f", p_value)),
+        # Step 3: avoid "p=0.000" for very small p-values
+        geom_text(aes(x = HR_upper_95,
+                      label = ifelse(p_value < 0.001, "p<0.001", sprintf("p=%.3f", p_value))),
                   hjust = -0.1, size = 2.7, colour = "grey45") +
         scale_colour_manual(values = pal, name = "",
             labels = c(danger = "Danger gene (HR > 1)", protective = "Protective gene (HR < 1)")) +
@@ -235,7 +266,7 @@ message("Saved: ", DATASET, "_univariate_cox.rds (",
 
 if (nrow(univ$sig_results) > 0) {
     ggsave(file.path(VIS_DIR, "univariate_forest_plot.png"),
-           plot_forest(univ$sig_results, "Univariate Cox: Hazard Ratios (p < 0.05)"),
+           plot_forest(univ$sig_results, "Univariate Cox: Hazard Ratios (BH-adj. p < 0.05)"),
            dpi = 150, width = 9, height = max(4, nrow(univ$sig_results) * 0.3))
     message("Saved: univariate_forest_plot.png")
 }
@@ -245,6 +276,8 @@ if (nrow(univ$sig_results) > 0) {
 X_train <- as.matrix(univ_expr[, univ_sig])
 y_train <- Surv(as.numeric(univ_expr$rfs_time), as.integer(univ_expr$rfs_event))
 
+# Step 4: seed placed immediately before the CV calls that consume it
+set.seed(42)
 lasso_result <- run_penalized_cox(X_train, y_train, LASSO_ALPHA, N_FOLDS, "LASSO")
 enet_result  <- run_penalized_cox(X_train, y_train, ENET_ALPHA,  N_FOLDS, "Elastic Net")
 
@@ -276,27 +309,55 @@ message("Saved: ", DATASET, "_penalized_cox.rds (",
 
 # ── step 3: multivariate cox ──────────────────────────────────────────────────
 
-# merge penalized expression with clinical covariates for joint model
-clinical_sel               <- clinical[, c("geo_accession", CLINICAL_COVARS)]
-train_data                 <- merge(penal_expr, clinical_sel, by = "geo_accession")
-train_data[CLINICAL_COVARS] <- lapply(train_data[CLINICAL_COVARS],
-                                      function(x) as.numeric(as.character(x)))
-train_data                 <- train_data[complete.cases(train_data), ]
-train_data$rfs_event       <- as.integer(train_data$rfs_event)
+clinical_sel <- clinical[, c("geo_accession", CLINICAL_COVARS)]
+train_data   <- merge(penal_expr, clinical_sel, by = "geo_accession")
 
-multi           <- run_multivariate_cox(train_data, penal_genes, CLINICAL_COVARS)
-multi_sig_genes <- if (nrow(multi$sig_results) > 0) multi$sig_results$gene else penal_genes
-
-if (nrow(multi$sig_results) > 0) {
-    ggsave(file.path(VIS_DIR, "multivariate_forest_plot.png"),
-           plot_forest(multi$sig_results, "Multivariate Cox: Significant Genes (p < 0.05)"),
-           dpi = 150, width = 9, height = max(4, nrow(multi$sig_results) * 0.3))
-    message("Saved: multivariate_forest_plot.png")
+# Step 6: warn explicitly when character-encoded variables produce NAs on coercion
+for (col in CLINICAL_COVARS) {
+    n_before <- sum(!is.na(train_data[[col]]))
+    train_data[[col]] <- suppressWarnings(as.numeric(as.character(train_data[[col]])))
+    n_after  <- sum(!is.na(train_data[[col]]))
+    if (n_after < n_before)
+        warning("Column '", col, "': ", n_before - n_after,
+                " values coerced to NA — check encoding in clinical metadata.")
 }
+train_data           <- train_data[complete.cases(train_data), ]
+train_data$rfs_event <- as.integer(train_data$rfs_event)
+message("  Patients with complete clinical data: ", nrow(train_data))
 
-# score all patients from penal_expr using betas from the multivariate model
-# (not restricted to those with complete clinical data)
-scored            <- compute_risk_scores(penal_expr, multi$all_results, multi_sig_genes)
+multi <- run_multivariate_cox(train_data, penal_genes, CLINICAL_COVARS)
+
+# Step 8: stop explicitly on null result rather than silently falling back to
+# non-significant genes
+if (nrow(multi$sig_results) == 0) {
+    message("No genes reached p < ", P_CUTOFF, " in multivariate Cox. ",
+            "Skipping risk scoring and KM plot — report as null result.")
+    saveRDS(multi, file.path(COX_DIR, paste0(DATASET, "_multivariate_cox_null.rds")))
+    quit(save = "no", status = 0)
+}
+multi_sig_genes <- multi$sig_results$gene
+
+ggsave(file.path(VIS_DIR, "multivariate_forest_plot.png"),
+       plot_forest(multi$sig_results, "Multivariate Cox: Significant Genes (p < 0.05)"),
+       dpi = 150, width = 9, height = max(4, nrow(multi$sig_results) * 0.3))
+message("Saved: multivariate_forest_plot.png")
+
+# Step 7: fit a gene-only Cox model for scoring so betas are not adjusted for
+# clinical covariates — avoids applying an incomplete linear predictor
+gene_only_cox <- coxph(
+    as.formula(sprintf(
+        "Surv(rfs_time, rfs_event) ~ %s",
+        paste(sprintf("`%s`", penal_genes), collapse = " + ")
+    )),
+    data = train_data
+)
+gene_only_coefs <- data.frame(
+    gene = names(coef(gene_only_cox)),
+    beta = coef(gene_only_cox),
+    stringsAsFactors = FALSE
+)
+
+scored            <- compute_risk_scores(penal_expr, gene_only_coefs, penal_genes)
 train_median      <- median(scored$risk_score)
 scored$risk_group <- ifelse(scored$risk_score >= train_median, "High Risk", "Low Risk")
 
