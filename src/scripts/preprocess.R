@@ -105,7 +105,7 @@ select_features <- function(df, keep) {
     df[, intersect(keep, colnames(df)), drop = FALSE]
 }
 
-# Converts rfs_time to days regardless of original unit.
+# Converts rfs_time to days regardless of original unit
 to_days <- function(time, unit) {
     switch(unit,
         days   = time,
@@ -115,7 +115,7 @@ to_days <- function(time, unit) {
     )
 }
 
-# Normalises rfs_event to 1 (relapse) / 0 (no relapse) / NA.
+# Normalises rfs_event to 1 (relapse) / 0 (no relapse) / NA
 parse_rfs_event <- function(x) {
     x <- na_if(trimws(tolower(x)), "na")
     if (all(x[!is.na(x)] %in% c("0", "1"))) return(as.integer(x))
