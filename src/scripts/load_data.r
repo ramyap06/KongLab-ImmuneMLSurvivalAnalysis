@@ -115,5 +115,5 @@ build_legacy_immune_gene_list <- function(legacy_dir, out_path) {
 #     prepare_raw_affy_dataset(dataset)
 # }
 
-build_immune_gene_catalog(IMMUNE_GENES_DIR, IMMUNE_PATH, IMMPORT_BASE_URL, SIGNATURE_GENES)
-build_legacy_immune_gene_list(LEGACY_DIR, LEGACY_OUT_PATH)
+# build_immune_gene_catalog(IMMUNE_GENES_DIR, IMMUNE_PATH, IMMPORT_BASE_URL, SIGNATURE_GENES)
+# build_legacy_immune_gene_list(LEGACY_DIR, LEGACY_OUT_PATH)

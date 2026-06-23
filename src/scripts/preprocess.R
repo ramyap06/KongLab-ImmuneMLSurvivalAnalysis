@@ -4,13 +4,12 @@ library(affy)
 
 ROOT_DIR <- normalizePath(file.path(dirname(sys.frame(1)$ofile), "../.."))
 
-CEL_DIR  <- file.path(ROOT_DIR, "data/cel_files")
-TAR_DIR  <- file.path(ROOT_DIR, "data/tar_files")
-AFFY_DIR <- file.path(ROOT_DIR, "data/raw_affy_rds_files")
-META_DIR <- file.path(ROOT_DIR, "data/geo_metadata_rds_files")
-CLIN_DIR <- file.path(ROOT_DIR, "data/raw_clinical_rds_files")
-PRE_DIR  <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
-
+CEL_DIR      <- file.path(ROOT_DIR, "data/cel_files")
+TAR_DIR      <- file.path(ROOT_DIR, "data/tar_files")
+AFFY_DIR     <- file.path(ROOT_DIR, "data/raw_affy_rds_files")
+META_DIR     <- file.path(ROOT_DIR, "data/geo_metadata_rds_files")
+CLIN_DIR     <- file.path(ROOT_DIR, "data/raw_clinical_rds_files")
+PRE_DIR      <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
 DATASET_CONFIGS <- list(
     GSE42568 = list(
         role = "train",
