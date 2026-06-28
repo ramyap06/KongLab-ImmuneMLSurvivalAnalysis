@@ -4,12 +4,14 @@ library(affy)
 
 ROOT_DIR <- normalizePath(file.path(dirname(sys.frame(1)$ofile), "../.."))
 
-CEL_DIR      <- file.path(ROOT_DIR, "data/cel_files")
-TAR_DIR      <- file.path(ROOT_DIR, "data/tar_files")
-AFFY_DIR     <- file.path(ROOT_DIR, "data/raw_affy_rds_files")
-META_DIR     <- file.path(ROOT_DIR, "data/geo_metadata_rds_files")
-CLIN_DIR     <- file.path(ROOT_DIR, "data/raw_clinical_rds_files")
-PRE_DIR      <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
+CEL_DIR        <- file.path(ROOT_DIR, "data/cel_files")
+TAR_DIR        <- file.path(ROOT_DIR, "data/tar_files")
+AFFY_DIR       <- file.path(ROOT_DIR, "data/raw_affy_rds_files")
+META_DIR       <- file.path(ROOT_DIR, "data/geo_metadata_rds_files")
+CLIN_DIR       <- file.path(ROOT_DIR, "data/raw_clinical_rds_files")
+PRE_DIR        <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
+BEFORE_PRE_DIR <- file.path(ROOT_DIR, "data/before_sample_filtering_preprocessed_rds_files")
+
 DATASET_CONFIGS <- list(
     GSE42568 = list(
         role = "train",
@@ -71,6 +73,7 @@ normalize_affy_dataset <- function(raw_affy, dataset_name) {
     normalized_data <- rma(raw_affy)
     normalized_expr <- as.data.frame(exprs(normalized_data))
     normalized_expr <- tibble::rownames_to_column(normalized_expr, var = "ID")
+    colnames(normalized_expr) <- gsub("\\.CEL\\.gz$", "", colnames(normalized_expr))
     colnames(normalized_expr) <- gsub("_.*", "", colnames(normalized_expr))
     return(normalized_expr)
 }
@@ -85,6 +88,8 @@ annotate_expression_matrix <- function(normalized_expr, gse, dataset_name) {
 
 collapse_probe_expression <- function(annotated_expr, dataset_name) {
     message("[", dataset_name, "] Collapsing probes...")
+    dir.create(BEFORE_PRE_DIR, recursive = TRUE, showWarnings = FALSE)
+    saveRDS(annotated_expr, file.path(BEFORE_PRE_DIR, paste0(dataset_name, "_before_sample_filtering_expr.rds")))
     annotated_expr |>
         filter(!grepl("///", `Gene Symbol`), `Gene Symbol` != "") |>
         group_by(`Gene Symbol`) |>
@@ -165,7 +170,7 @@ export_processed_datasets <- function(expression_matrix, clinical_metadata, data
 # ── main loop ─────────────────────────────────────────────────────────────────
 
 for (dataset in names(DATASET_CONFIGS)) {
-    cfg      <- DATASET_CONFIGS[[dataset]]
+    config      <- DATASET_CONFIGS[[dataset]]
     raw_affy <- readRDS(file.path(AFFY_DIR, paste0(dataset, "_raw_affy.rds")))
     gse      <- readRDS(file.path(META_DIR,  paste0(dataset, "_metadata.rds")))
 
@@ -175,7 +180,7 @@ for (dataset in names(DATASET_CONFIGS)) {
     normalized_expr <- normalize_affy_dataset(raw_affy, dataset)
     annotated_expr  <- annotate_expression_matrix(normalized_expr, gse, dataset)
     final_expr      <- collapse_probe_expression(annotated_expr, dataset)
-    clinical        <- process_clinical_metadata(gse, cfg, dataset)
+    clinical        <- process_clinical_metadata(gse, config, dataset)
 
     final_expr <- sync_expression_to_clinical(final_expr, clinical)
 
