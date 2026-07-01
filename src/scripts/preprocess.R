@@ -166,7 +166,6 @@ export_processed_datasets <- function(expression_matrix, clinical_metadata, data
     message("[", dataset_name, "] Exporting...")
     dir.create(PRE_DIR, recursive = TRUE, showWarnings = FALSE)
     saveRDS(expression_matrix, file.path(PRE_DIR, paste0(dataset_name, "_expression_matrix.rds")))
-    saveRDS(clinical_metadata, file.path(PRE_DIR, paste0(dataset_name, "_clinical_metadata.rds")))
 }
 
 # ── batch correction ──────────────────────────────────────────────────────────
@@ -222,6 +221,7 @@ export_batch_corrected_datasets <- function(expression_matrix, dataset_name) {
     message("[", dataset_name, "] Exporting batch-corrected...")
     dir.create(BATCH_DIR, recursive = TRUE, showWarnings = FALSE)
     saveRDS(expression_matrix, file.path(BATCH_DIR, paste0(dataset_name, "_expression_matrix.rds")))
+    saveRDS(clinical_metadata, file.path(BATCH_DIR, paste0(dataset_name, "_clinical_metadata.rds")))
 }
 
 # ── main loop ─────────────────────────────────────────────────────────────────
