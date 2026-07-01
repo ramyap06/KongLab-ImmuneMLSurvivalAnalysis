@@ -1,6 +1,7 @@
 library(tidyverse)
 library(GEOquery)
 library(affy)
+library(sva)
 
 ROOT_DIR <- normalizePath(file.path(dirname(sys.frame(1)$ofile), "../.."))
 
@@ -9,8 +10,9 @@ TAR_DIR        <- file.path(ROOT_DIR, "data/tar_files")
 AFFY_DIR       <- file.path(ROOT_DIR, "data/raw_affy_rds_files")
 META_DIR       <- file.path(ROOT_DIR, "data/geo_metadata_rds_files")
 CLIN_DIR       <- file.path(ROOT_DIR, "data/raw_clinical_rds_files")
-PRE_DIR        <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
 BEFORE_PRE_DIR <- file.path(ROOT_DIR, "data/before_sample_filtering_preprocessed_rds_files")
+PRE_DIR        <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
+BATCH_DIR      <- file.path(ROOT_DIR, "data/batch_corrected_rds_files")
 
 DATASET_CONFIGS <- list(
     GSE42568 = list(
@@ -148,10 +150,10 @@ process_clinical_metadata <- function(gse, cfg, dataset_name) {
             rfs_time  = to_days(as.numeric(na_if(rfs_time, "NA")), cfg$time_unit)
         )
 
-    tumor_rows     <- df |> filter(is_tumor == 1) |> drop_invalid() |> tidyr::drop_na()
-    non_tumor_rows <- df |> filter(is_tumor != 1 | is.na(is_tumor))
-
-    bind_rows(tumor_rows, non_tumor_rows) |>
+    df |>
+        filter(is_tumor == 1) |>
+        drop_invalid() |>
+        tidyr::drop_na() |>
         select_features(cfg$keep)
 }
 
@@ -165,6 +167,61 @@ export_processed_datasets <- function(expression_matrix, clinical_metadata, data
     dir.create(PRE_DIR, recursive = TRUE, showWarnings = FALSE)
     saveRDS(expression_matrix, file.path(PRE_DIR, paste0(dataset_name, "_expression_matrix.rds")))
     saveRDS(clinical_metadata, file.path(PRE_DIR, paste0(dataset_name, "_clinical_metadata.rds")))
+}
+
+# ── batch correction ──────────────────────────────────────────────────────────
+
+prepare_combined_data <- function(datapath, datasets) {
+    exprs <- list()
+
+    message("Loading datasets...")
+    for (d in datasets) {
+        df <- readRDS(file.path(datapath, paste0(d, "_expression_matrix.rds")))
+
+        gene_symbols <- df[["gene_symbol"]]
+        ex <- as.matrix(df[, colnames(df) != "gene_symbol"])
+        storage.mode(ex) <- "numeric"
+        rownames(ex) <- gene_symbols
+
+        exprs[[d]] <- ex
+        message("  Loaded ", d, " - ", ncol(ex), " samples")
+    }
+
+    message("Intersecting genes across datasets...")
+    common_genes <- Reduce(intersect, lapply(exprs, rownames))
+    message("  ", length(common_genes), " common genes retained")
+    exprs <- lapply(exprs, function(m) m[common_genes, ])
+
+    message("Combining datasets...")
+    expr  <- do.call(cbind, exprs)
+    batch <- rep(names(exprs), times = sapply(exprs, ncol))
+    colnames(expr) <- sub("^[^.]+\\.", "", colnames(expr))
+
+    message("  Combined: ", ncol(expr), " total samples, ", nrow(expr), " genes")
+
+    batch_data = list(expr = expr, batch = batch, datasets = names(exprs))
+
+    return(batch_data)
+}
+
+perform_batch_correction <- function(data) {
+    message("Running ComBat batch correction...")
+    corrected <- ComBat(dat = data$expr, batch = data$batch)
+    message("  Done")
+
+    message("Splitting corrected matrix by dataset...")
+    corrected_sets <- list()
+    for (d in data$datasets) {
+        corrected_sets[[d]] <- corrected[, data$batch == d]
+        message("  ", d, " - ", ncol(corrected_sets[[d]]), " samples")
+    }
+    return(corrected_sets)
+}
+
+export_batch_corrected_datasets <- function(expression_matrix, dataset_name) {
+    message("[", dataset_name, "] Exporting batch-corrected...")
+    dir.create(BATCH_DIR, recursive = TRUE, showWarnings = FALSE)
+    saveRDS(expression_matrix, file.path(BATCH_DIR, paste0(dataset_name, "_expression_matrix.rds")))
 }
 
 # ── main loop ─────────────────────────────────────────────────────────────────
@@ -186,4 +243,12 @@ for (dataset in names(DATASET_CONFIGS)) {
 
     export_processed_datasets(final_expr, clinical, dataset)
     message("[", dataset, "] Done.\n")
+}
+
+# batch correction
+combined_batch_data <- prepare_combined_data(PRE_DIR, names(DATASET_CONFIGS))
+corrected_sets <- perform_batch_correction(combined_batch_data)
+
+for (d in names(DATASET_CONFIGS)) {
+    export_batch_corrected_datasets(corrected_sets[[d]], d)
 }
