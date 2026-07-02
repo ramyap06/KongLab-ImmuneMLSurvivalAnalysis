@@ -77,7 +77,7 @@ normalize_affy_dataset <- function(raw_affy, dataset_name) {
     normalized_expr <- tibble::rownames_to_column(normalized_expr, var = "ID")
     colnames(normalized_expr) <- gsub("\\.CEL\\.gz$", "", colnames(normalized_expr))
     colnames(normalized_expr) <- gsub("_.*", "", colnames(normalized_expr))
-    return(normalized_expr)
+    normalized_expr
 }
 
 annotate_expression_matrix <- function(normalized_expr, gse, dataset_name) {
@@ -200,7 +200,7 @@ prepare_combined_data <- function(datapath, datasets) {
 
     batch_data = list(expr = expr, batch = batch, datasets = names(exprs))
 
-    return(batch_data)
+    batch_data
 }
 
 perform_batch_correction <- function(data) {
@@ -214,7 +214,7 @@ perform_batch_correction <- function(data) {
         corrected_sets[[d]] <- corrected[, data$batch == d]
         message("  ", d, " - ", ncol(corrected_sets[[d]]), " samples")
     }
-    return(corrected_sets)
+    corrected_sets
 }
 
 export_batch_corrected_datasets <- function(expression_matrix, dataset_name) {
