@@ -13,6 +13,7 @@ CLIN_DIR       <- file.path(ROOT_DIR, "data/raw_clinical_rds_files")
 BEFORE_PRE_DIR <- file.path(ROOT_DIR, "data/before_sample_filtering_preprocessed_rds_files")
 PRE_DIR        <- file.path(ROOT_DIR, "data/preprocessed_rds_files")
 BATCH_DIR      <- file.path(ROOT_DIR, "data/batch_corrected_rds_files")
+IMMUNE_GENES_PATH <- file.path(ROOT_DIR, "data/immune_genes_and_tf/immune_genes.rds")
 
 DATASET_CONFIGS <- list(
     GSE42568 = list(
@@ -166,6 +167,7 @@ export_processed_datasets <- function(expression_matrix, clinical_metadata, data
     message("[", dataset_name, "] Exporting...")
     dir.create(PRE_DIR, recursive = TRUE, showWarnings = FALSE)
     saveRDS(expression_matrix, file.path(PRE_DIR, paste0(dataset_name, "_expression_matrix.rds")))
+    saveRDS(clinical_metadata, file.path(PRE_DIR, paste0(dataset_name, "_clinical_metadata.rds")))
 }
 
 # ── batch correction ──────────────────────────────────────────────────────────
@@ -217,38 +219,50 @@ perform_batch_correction <- function(data) {
     corrected_sets
 }
 
-export_batch_corrected_datasets <- function(expression_matrix, dataset_name) {
+filter_immune_genes <- function(corrected_sets) {
+    message("Filtering to immune genes...")
+    immune_genes <- readRDS(IMMUNE_GENES_PATH)
+
+    lapply(corrected_sets, function(expr) {
+        genes <- intersect(rownames(expr), immune_genes)
+        message("  ", length(genes), " / ", length(immune_genes), " immune genes retained")
+        expr[genes, , drop = FALSE]
+    })
+}
+
+export_batch_corrected_filtered_datasets <- function(expression_matrix, dataset_name) {
     message("[", dataset_name, "] Exporting batch-corrected...")
     dir.create(BATCH_DIR, recursive = TRUE, showWarnings = FALSE)
     saveRDS(expression_matrix, file.path(BATCH_DIR, paste0(dataset_name, "_expression_matrix.rds")))
-    saveRDS(clinical_metadata, file.path(BATCH_DIR, paste0(dataset_name, "_clinical_metadata.rds")))
 }
 
 # ── main loop ─────────────────────────────────────────────────────────────────
 
-for (dataset in names(DATASET_CONFIGS)) {
-    config      <- DATASET_CONFIGS[[dataset]]
-    raw_affy <- readRDS(file.path(AFFY_DIR, paste0(dataset, "_raw_affy.rds")))
-    gse      <- readRDS(file.path(META_DIR,  paste0(dataset, "_metadata.rds")))
+# for (dataset in names(DATASET_CONFIGS)) {
+#     config      <- DATASET_CONFIGS[[dataset]]
+#     raw_affy <- readRDS(file.path(AFFY_DIR, paste0(dataset, "_raw_affy.rds")))
+#     gse      <- readRDS(file.path(META_DIR,  paste0(dataset, "_metadata.rds")))
 
-    dir.create(CLIN_DIR, recursive = TRUE, showWarnings = FALSE)
-    saveRDS(pData(gse[[1]]), file.path(CLIN_DIR, paste0(dataset, "_raw_clinical.rds")))
+#     dir.create(CLIN_DIR, recursive = TRUE, showWarnings = FALSE)
+#     saveRDS(pData(gse[[1]]), file.path(CLIN_DIR, paste0(dataset, "_raw_clinical.rds")))
 
-    normalized_expr <- normalize_affy_dataset(raw_affy, dataset)
-    annotated_expr  <- annotate_expression_matrix(normalized_expr, gse, dataset)
-    final_expr      <- collapse_probe_expression(annotated_expr, dataset)
-    clinical        <- process_clinical_metadata(gse, config, dataset)
+#     normalized_expr <- normalize_affy_dataset(raw_affy, dataset)
+#     annotated_expr  <- annotate_expression_matrix(normalized_expr, gse, dataset)
+#     final_expr      <- collapse_probe_expression(annotated_expr, dataset)
+#     clinical        <- process_clinical_metadata(gse, config, dataset)
 
-    final_expr <- sync_expression_to_clinical(final_expr, clinical)
+#     final_expr <- sync_expression_to_clinical(final_expr, clinical)
 
-    export_processed_datasets(final_expr, clinical, dataset)
-    message("[", dataset, "] Done.\n")
-}
+#     export_processed_datasets(final_expr, clinical, dataset)
+#     clinical_by_dataset[[dataset]] <- clinical
+#     message("[", dataset, "] Done.\n")
+# }
 
 # batch correction
 combined_batch_data <- prepare_combined_data(PRE_DIR, names(DATASET_CONFIGS))
 corrected_sets <- perform_batch_correction(combined_batch_data)
+corrected_sets <- filter_immune_genes(corrected_sets)
 
 for (d in names(DATASET_CONFIGS)) {
-    export_batch_corrected_datasets(corrected_sets[[d]], d)
+    export_batch_corrected_filtered_datasets(corrected_sets[[d]], d)
 }
